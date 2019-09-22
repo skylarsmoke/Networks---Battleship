@@ -3,18 +3,22 @@
 import socket
 import sys
 
-def play(ad, p, x, y):
-    print("Connecting to server...")
+def fire(IP, prt, x, y):
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    sock.connect((socket.gethostbyname(ad), int(p)))
+    sock.connect((socket.gethostbyname(IP), int(prt)))
     
     while True:
+        
         msg = sock.recv(128)
         print(msg.decode("utf-8"))
         
         
 def main():
-    play(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
+    IP = sys.argv[1]
+    prt = sys.argv[2]
+    x = sys.argv[3]
+    y = sys.argv[4]
+    fire(IP, prt, x, y)
             
 main()
             

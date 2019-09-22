@@ -11,10 +11,8 @@ def startServer(p, file):
     sock.listen(5)
     board = open(file, "r")
     print("Server Started.")
-    print("Looking for client...")
     while True:
         s, addr = sock.accept()
-        print("Client found.")
         print(f"Connected to: {addr}")
         s.send(bytes("Connected to server.", "utf-8"))
 
