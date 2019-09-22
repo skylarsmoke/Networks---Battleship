@@ -1,3 +1,5 @@
+#Skylar Smoker, John Lambrecht, and Ben Barnett
+
 import socket
 
 def startServer():
@@ -9,9 +11,9 @@ def startServer():
     sock.listen(5)
 
     while True:
-        addr = sock.accept()
+        s, addr = sock.accept()
         print(f"Connected to: {addr}")
-        addr.send(bytes("Connected to server."), "UTF-8")
+        s.send(bytes("Connected to server.", "utf-8"))
 
 def main():
     startServer()

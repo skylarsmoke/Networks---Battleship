@@ -1,3 +1,5 @@
+#Skylar Smoker, John Lambrecht, and Ben Barnett
+
 import socket
 
 def menu():
@@ -14,7 +16,7 @@ def play():
     
     while True:
         msg = sock.recv(128)
-        print(msg.decode("UTF-8"))
+        print(msg.decode("utf-8"))
         
         
 def main():
