@@ -1,18 +1,12 @@
 #Skylar Smoker, John Lambrecht, and Ben Barnett
 
 import socket
+import sys
 
-def menu():
-    print("Welcome to Battleship!")
-    print()
-    print("1) Play")
-    print("2) Quit")
-    print()
-
-def play():
+def play(ad, p, x, y):
     print("Connecting to server...")
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    sock.connect((socket.gethostbyname("localhost"), 1235))
+    sock.connect((socket.gethostbyname(ad), int(p)))
     
     while True:
         msg = sock.recv(128)
@@ -20,12 +14,7 @@ def play():
         
         
 def main():
-    choice = 0
-    while (choice != 2):
-        menu()
-        choice = int(input("Selection: "))
-        if (choice == 1):
-            play()
+    play(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
             
 main()
             
