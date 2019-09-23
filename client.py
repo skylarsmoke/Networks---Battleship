@@ -10,7 +10,7 @@ def fire(IP, prt, x, y):
     user = "Battleship Client"
     coord = "x = %d, y = %d" %(int(x), int(y))
     contType = "application/x-www-form-urlencoded"
-    length = str(len(coord))
+    length = len(coord)
     connectionType = "close"
     
     msg = "POST / HTTP/1.1\r\n" \
@@ -19,10 +19,10 @@ def fire(IP, prt, x, y):
        "User-Agent: %s\r\n" \
        "Content-Length: %s\r\n" \
        "%s" \
-       % (connectionType, contType, user, length, coord)
+       % (connectionType, contType, user, str(length), coord)
        
-    sock.send(msg.encode("utf-8"))
-    servResp = sock.recv(1000).decode()
+    sock.send(bytes(msg, "utf-8"))
+    #servResp = sock.recv(500).decode()
     
     sock.close()
         
