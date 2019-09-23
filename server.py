@@ -9,12 +9,19 @@ def startServer(p, file):
     host = socket.gethostbyname("localhost")
     sock.bind((host, int(p)))
     sock.listen(5)
-    board = open(file, "r")
+    file = open(file, "r")
+    own_board = [[0 for x in range(10)] for y in range(10)]
+    opponent_board = [[0 for x in range(10)] for y in range(10)]
+    makeBoard(own_board, file)
+    makeBoard(opponent_board, file)
     print("Server Started.")
-    while True:
-        s, addr = sock.accept()
-        print(f"Connected to: {addr}")
-        s.send(bytes("Connected to server.", "utf-8"))
+    
+        
+def makeBoard(board, file):
+    for i in range(10):
+        for j in range(11):
+            pass
+        
 
 def main():
     startServer(sys.argv[1], sys.argv[2])

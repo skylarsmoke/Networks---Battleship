@@ -7,10 +7,24 @@ def fire(IP, prt, x, y):
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     sock.connect((socket.gethostbyname(IP), int(prt)))
     
-    while True:
-        
-        msg = sock.recv(128)
-        print(msg.decode("utf-8"))
+    user = "Battleship Client"
+    coord = "x = %d, y = %d" %(int(x), int(y))
+    contType = "application/x-www-form-urlencoded"
+    length = str(len(coord))
+    connectionType = "close"
+    
+    msg = "POST / HTTP/1.1\r\n" \
+       "Connection: %s\r\n" \
+       "Content-Type: %s\r\n" \
+       "User-Agent: %s\r\n" \
+       "Content-Length: %s\r\n" \
+       "%s" \
+       % (connectionType, contType, user, length, coord)
+       
+    sock.send(msg.encode("utf-8"))
+    servResp = sock.recv(1000).decode()
+    
+    sock.close()
         
         
 def main():
