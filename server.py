@@ -18,7 +18,7 @@ def startServer(port, file):
     #Binds sockets to set up server
     print("Starting server...")
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    host = socket.gethostbyname("localhost")
+    host = socket.gethostbyname("")
     sock.bind((host, int(port)))
     sock.listen(5)
     
