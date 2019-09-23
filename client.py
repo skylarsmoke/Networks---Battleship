@@ -8,7 +8,7 @@ def fire(IP, prt, x, y):
     sock.connect((socket.gethostbyname(IP), int(prt)))
     
     user = "Battleship Client"
-    coord = "x = %d, y = %d" %(int(x), int(y))
+    coord = "x=%d&y=%d" %(int(x), int(y))
     contType = "application/x-www-form-urlencoded"
     length = len(coord)
     connectionType = "close"
@@ -21,8 +21,9 @@ def fire(IP, prt, x, y):
        "%s" \
        % (connectionType, contType, user, str(length), coord)
        
-    sock.send(bytes(msg, "utf-8"))
-    #servResp = sock.recv(500).decode()
+    sock.sendall(bytes(msg, "utf-8"))
+    servResp = sock.recv(1024)
+    print(servResp.decode())
     
     sock.close()
         
