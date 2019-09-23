@@ -17,28 +17,50 @@ def startServer(port, file):
     opponent_board = [[0 for x in range(10)] for y in range(10)]
     
     #Fills own_board array from text
-    makeBoard(own_board, file)
+    transferBoard(own_board, file)
+    transferBoard(opponent_board, open("opponent_board.txt", "r"))
+    
+    #Prints a display for both Own and Opponents board
+    print()
+    print("        Own Board")
+    displayBoard(own_board)
+    print("     Opponent Board")
+    displayBoard(opponent_board)
     
     #Ships health and associated char
     shipHealth = ["D", 2, "S", 3, "R", 3, "B", 4, "C", 5]
     
-    print("Server Started.")
+    print("Server Started, waiting for client...")
+    print()
     
     while True:
         s, addr = sock.accept()
         print(f"Connected to: {addr}")
+        print()
         msg = s.recv(1024)
         print(msg.decode("utf-8"))
         
-def makeBoard(board, file):
+def transferBoard(board, file):
     for x in range(10):
         for y in range(11):
             if y > 9:
                 file.read(1)
             else:
                 board[x][y] = file.read(1)
-        
-
+                
+def displayBoard(board):
+    line = "  _____________________"
+    for x in range(10):
+        if x > 0:
+            line += "|\n | "
+        else:
+            line += "\n | "
+        for y in range(10):
+            line += board[x][y] + " "
+    print(line + "|")
+    print("  _____________________")
+    print()
+               
 def main():
     startServer(sys.argv[1], sys.argv[2])
     
