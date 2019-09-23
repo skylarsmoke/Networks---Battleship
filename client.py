@@ -21,7 +21,7 @@ def fire(IP, prt, x, y):
        "Content-Type: %s\r\n" \
        "User-Agent: %s\r\n" \
        "Content-Length: %s\r\n" \
-       "%s" \
+       "%s\n" \
        % (connectionType, contType, user, str(length), coord)
        
     sock.sendall(bytes(msg, "utf-8"))
@@ -46,7 +46,7 @@ def fire(IP, prt, x, y):
                "Content-Type: %s\r\n" \
                "User-Agent: %s\r\n" \
                "Content-Length: %s\r\n" \
-               "%s" \
+               "%s\n" \
                % (connectionType, contType, user, str(length), coord)
                
             #print("hit=0")
@@ -60,7 +60,7 @@ def fire(IP, prt, x, y):
                "Content-Type: %s\r\n" \
                "User-Agent: %s\r\n" \
                "Content-Length: %s\r\n" \
-               "%s" \
+               "%s\n" \
                % (connectionType, contType, user, str(length), coord)
             
             #print("hit=1")
@@ -73,7 +73,7 @@ def fire(IP, prt, x, y):
                "Content-Type: %s\r\n" \
                "User-Agent: %s\r\n" \
                "Content-Length: %s\r\n" \
-               "%s" \
+               "%s\n" \
                % (connectionType, contType, user, str(length), coord)
             
             #print("hit=1\&sink=%s" % servMsg)
