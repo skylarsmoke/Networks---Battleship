@@ -1,5 +1,7 @@
 #Skylar Smoker, John Lambrecht, and Ben Barnett
 
+# Help from Kyle J. B. code examples, as well as stack overflow examples
+
 import socket
 import sys
 import re
@@ -39,14 +41,32 @@ def startServer(port, file):
     #Connects to client and responds with hit or miss
     while True:
         s, addr = sock.accept()
-        print(f"Connected to: {addr}")
+        print(f"Request from: {addr}")
         print()
         msg = s.recv(1024)
         
-        #Checks message sent by client and sends the correct reply
-        servMsg = checkMsg(msg.decode("utf-8"))       
-        s.sendall(bytes(str(servMsg), "utf-8"))
+        #Checks message sent by client and returns a decoded version
+        servMsg = checkMsg(msg.decode("utf-8"))
         
+        contType = "x-www-form-urlencoded"
+        length = len(servMsg)
+        connectionType = "close"
+        
+        if servMsg == "400" or servMsg == "404" or servMsg == "410":
+            finalMsg = "HTTP/1.1 %s\r\n" \
+               "Connection: %s\r\n" \
+               "Content-Type: %s\r\n" \
+               "Content-Length: %s\r\n" \
+               % (servMsg, connectionType, contType, length)
+        else:
+            finalMsg = "HTTP/1.1 200 OK\r\n" \
+               "Connection: %s\r\n" \
+               "Content-Type: %s\r\n" \
+               "Content-Length: %s\r\n" \
+               "%s" \
+               % (connectionType, contType, length, servMsg)
+            
+        s.sendall(bytes(str(finalMsg), "utf-8"))
         
         s.close()
         
@@ -60,7 +80,7 @@ def transferBoard(board, file):
                 
 def displayBoard(board):
     line = "    _____________________"
-    n = 0
+    n = -1
     for x in range(9):
         n += 1
         if x > 0:
@@ -81,6 +101,8 @@ def checkHit(x, y):
         servMsg = "hit=0" #means miss
         own_board[y][x] = "O"
         opponent_board[y][x] = "O"
+    elif own_board[y][x] == "X" or own_board[y][x] == "O":
+        servMsg = "410"
     else:
         for i in range(10):
             if own_board[y][x] == shipHealth[i]:
@@ -97,27 +119,32 @@ def checkHit(x, y):
     
 def checkMsg(msg):
     servMsg = ""
-    splitMsg = re.split("\n", msg)
-    if "GET /opponent_board.html" in msg:
+    if re.search("x=-\d+&y=-\d+", msg) or re.search("x=\d+&y=-\d+", msg) or re.search("x=-\d+&y=\d+", msg):
+        servMsg = "404"
+    elif "GET /opponent_board.html" in msg:
         servMsg = displayBoard(opponent_board)
     elif "GET /own_board.html" in msg:
         servMsg = displayBoard(own_board)
-    elif re.search("x=\d&y=\d", msg):
-        for i in splitMsg:
-            if re.search("x=\d&y=\d", i):
+    elif re.search("x=\d+&y=\d+", msg):
+        for i in re.split("\n", msg):
+            if re.search(r"x=\d+&y=\d+", i):
                 coord = re.split("&", i)
                 n = 0
                 for j in coord:
-                    z = re.search("\d", j).group()
+                    z = re.search(r"\d+", j).group()
                     coord[n] = int(z)
                     n += 1
                 y = coord[1]
                 x = coord[0]
-                servMsg = checkHit(x, y)
+                if x > 9 or y > 9:
+                    servMsg = "404" #Not Found
+                else:
+                    servMsg = checkHit(x, y)
+    else:
+        servMsg = "400" #Bad Request
     return servMsg
     
-    
-    
+
                
 def main():
     startServer(sys.argv[1], sys.argv[2])
