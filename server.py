@@ -114,33 +114,37 @@ def checkHit(x, y):
         own_board[y][x] = "X"
         opponent_board[y][x] = "X"
     return servMsg
-                    
+
 def htmlBoard(board):
-    html = "<html><body> \n"
-    html += "    _____________________"
+    html = "<html><body>"
+    html += "    _____________________<br>"
     n = -1
     for x in range(9):
         n += 1
         if x > 0:
-            html += "|\n %d | " % n
+            html += "|<br>\n %d | " % n
         else:
             html += "\n 0 | "
         for y in range(10):
             html += board[x][y] + " "
-    html += "|\n"
-    html += "    _____________________\n"
+    html += "|\n<br>"
+    html += "    _____________________<br>\n"
     html += "     0 1 2 3 4 5 6 7 8 9\n "
     html += "</body> </html>"
     return html
+    
     
 def checkMsg(msg):
     servMsg = ""
     if re.search("x=-\d+&y=-\d+", msg) or re.search("x=\d+&y=-\d+", msg) or re.search("x=-\d+&y=\d+", msg):
         servMsg = "404"
     elif "GET /opponent_board.html" in msg:
-        servMsg = htmlBoard(opponent_board)
+        displayBoard(opponent_board)
+        servMsg = htmlBoard(opponent_board)#htmlBoard(opponent_board)
     elif "GET /own_board.html" in msg:
+        displayBoard(own_board)
         servMsg = htmlBoard(own_board)
+        
     elif re.search("x=\d+&y=\d+", msg):
         for i in re.split("\n", msg):
             if re.search(r"x=\d+&y=\d+", i):
