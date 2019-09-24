@@ -116,7 +116,7 @@ def checkHit(x, y):
     return servMsg
                     
 def htmlBoard(board):
-    html = "<html> <body>"
+    html = "<html><body> \n"
     html += "    _____________________"
     n = -1
     for x in range(9):
@@ -127,9 +127,9 @@ def htmlBoard(board):
             html += "\n 0 | "
         for y in range(10):
             html += board[x][y] + " "
-    html += "|"
-    html += "    _____________________"
-    html += "     0 1 2 3 4 5 6 7 8 9 "
+    html += "|\n"
+    html += "    _____________________\n"
+    html += "     0 1 2 3 4 5 6 7 8 9\n "
     html += "</body> </html>"
     return html
     
