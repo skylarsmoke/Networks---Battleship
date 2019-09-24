@@ -3,12 +3,8 @@
 # Help from Kyle J. B. code examples, as well as stack overflow examples
 
 import socket
-import socketserver
-# import http.server
 import sys
 import re
-# import socketserver
-# import http.server
 
 #Ships health and associated char
 shipHealth = ["D", 2, "S", 3, "R", 3, "B", 4, "C", 5]
@@ -23,13 +19,6 @@ def startServer(port, file):
     print("Starting server...")
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     host = socket.gethostbyname("")
-    # Handler = http.server.SimpleHTTPRequestHandler
-    # socketserv = socketserver.TCPServer(("", port), Handler)
-
-    # handler = http.server.SimpleHTTPRequestHandler
-    # with socketserver.TCPServer((host, port), handler) as httpd:
-    #     print("serving at port ", port)
-    #     httpd.serve_forever()
     sock.bind((host, int(port)))
     sock.listen(5)
     
@@ -57,13 +46,10 @@ def startServer(port, file):
         msg = s.recv(1024)
         
         #Checks message sent by client and returns a decoded version
-        servMsg = checkMsg(msg.decode("utf-8").strip())
+        servMsg = checkMsg(msg.decode("utf-8"))
         
         contType = "x-www-form-urlencoded"
-        if servMsg is None:
-            length = 0
-        else:
-            length = len(servMsg)
+        length = len(servMsg)
         connectionType = "close"
         
         if servMsg == "400" or servMsg == "404" or servMsg == "410":
@@ -129,19 +115,32 @@ def checkHit(x, y):
         opponent_board[y][x] = "X"
     return servMsg
                     
-        
+def htmlBoard(board):
+    html = "<html> <body>"
+    html += "    _____________________"
+    n = -1
+    for x in range(9):
+        n += 1
+        if x > 0:
+            html += "|\n %d | " % n
+        else:
+            html += "\n 0 | "
+        for y in range(10):
+            html += board[x][y] + " "
+    html += "|"
+    html += "    _____________________"
+    html += "     0 1 2 3 4 5 6 7 8 9 "
+    html += "</body> </html>"
+    return html
     
 def checkMsg(msg):
     servMsg = ""
     if re.search("x=-\d+&y=-\d+", msg) or re.search("x=\d+&y=-\d+", msg) or re.search("x=-\d+&y=\d+", msg):
         servMsg = "404"
     elif "GET /opponent_board.html" in msg:
-        file = open("opponent_board.html", "r")
-        servMsg = file.read()
+        servMsg = htmlBoard(opponent_board)
     elif "GET /own_board.html" in msg:
-        file = open("own_board.html", "r")
-        print(file.read())
-        servMsg = "This is a test"
+        servMsg = htmlBoard(own_board)
     elif re.search("x=\d+&y=\d+", msg):
         for i in re.split("\n", msg):
             if re.search(r"x=\d+&y=\d+", i):
