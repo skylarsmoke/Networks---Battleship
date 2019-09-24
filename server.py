@@ -3,8 +3,12 @@
 # Help from Kyle J. B. code examples, as well as stack overflow examples
 
 import socket
+import socketserver
+# import http.server
 import sys
 import re
+# import socketserver
+# import http.server
 
 #Ships health and associated char
 shipHealth = ["D", 2, "S", 3, "R", 3, "B", 4, "C", 5]
@@ -19,6 +23,13 @@ def startServer(port, file):
     print("Starting server...")
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     host = socket.gethostbyname("")
+    # Handler = http.server.SimpleHTTPRequestHandler
+    # socketserv = socketserver.TCPServer(("", port), Handler)
+
+    # handler = http.server.SimpleHTTPRequestHandler
+    # with socketserver.TCPServer((host, port), handler) as httpd:
+    #     print("serving at port ", port)
+    #     httpd.serve_forever()
     sock.bind((host, int(port)))
     sock.listen(5)
     
@@ -46,10 +57,13 @@ def startServer(port, file):
         msg = s.recv(1024)
         
         #Checks message sent by client and returns a decoded version
-        servMsg = checkMsg(msg.decode("utf-8"))
+        servMsg = checkMsg(msg.decode("utf-8").strip())
         
         contType = "x-www-form-urlencoded"
-        length = len(servMsg)
+        if servMsg is None:
+            length = 0
+        else:
+            length = len(servMsg)
         connectionType = "close"
         
         if servMsg == "400" or servMsg == "404" or servMsg == "410":
@@ -122,9 +136,12 @@ def checkMsg(msg):
     if re.search("x=-\d+&y=-\d+", msg) or re.search("x=\d+&y=-\d+", msg) or re.search("x=-\d+&y=\d+", msg):
         servMsg = "404"
     elif "GET /opponent_board.html" in msg:
-        servMsg = displayBoard(opponent_board)
+        file = open("opponent_board.html", "r")
+        servMsg = file.read()
     elif "GET /own_board.html" in msg:
-        servMsg = displayBoard(own_board)
+        file = open("own_board.html", "r")
+        print(file.read())
+        servMsg = "This is a test"
     elif re.search("x=\d+&y=\d+", msg):
         for i in re.split("\n", msg):
             if re.search(r"x=\d+&y=\d+", i):
