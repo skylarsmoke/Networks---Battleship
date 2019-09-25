@@ -81,7 +81,10 @@ def startServer(port, file):
                % (connectionType, contType, length, servMsg)
             
         s.sendall(bytes(str(finalMsg), "utf-8"))
-        
+        print("own board")
+        displayBoard(own_board)
+        print("opponents board")
+        displayBoard(opponent_board)
         s.close()
         
 def transferBoard(board, file):
@@ -140,8 +143,8 @@ def checkMsg(msg):
         servMsg = file.read()
     elif "GET /own_board.html" in msg:
         file = open("own_board.html", "r")
-        print(file.read())
-        servMsg = "This is a test"
+        # print(file.read())
+        servMsg = file.read()
     elif re.search("x=\d+&y=\d+", msg):
         for i in re.split("\n", msg):
             if re.search(r"x=\d+&y=\d+", i):
@@ -160,10 +163,10 @@ def checkMsg(msg):
     else:
         servMsg = "400" #Bad Request
     return servMsg
-    
 
-               
+
 def main():
     startServer(sys.argv[1], sys.argv[2])
-    
+
+
 main()

@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2ed1d6b7-476e-4802-9aa7-a6834e5231a3" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/opponent_board.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/own_board.txt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/server.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -14,11 +12,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/client.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-675">
-              <caret line="9" column="60" selection-start-line="9" selection-start-column="60" selection-end-line="9" selection-end-column="60" />
+            <state relative-caret-position="132">
+              <caret line="18" column="16" selection-start-line="18" selection-start-column="16" selection-end-line="18" selection-end-column="16" />
               <folding>
                 <element signature="e#123#136#0" expanded="true" />
               </folding>
@@ -26,16 +24,30 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/server.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-735">
-              <caret line="82" column="14" selection-start-line="82" selection-start-column="10" selection-end-line="82" selection-end-column="14" />
+            <state relative-caret-position="311">
+              <caret line="86" column="17" lean-forward="true" selection-start-line="86" selection-start-column="17" selection-end-line="86" selection-end-column="17" />
               <folding>
                 <element signature="e#123#136#0" expanded="true" />
               </folding>
             </state>
           </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/own_board.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="68">
+              <caret line="4" column="5" selection-start-line="4" selection-start-column="5" selection-end-line="4" selection-end-column="5" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/opponent_board.html">
+          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
     </leaf>
@@ -56,7 +68,6 @@
       <find>request</find>
       <find>encode</find>
       <find>fire</find>
-      <find>get</find>
       <find>from</find>
       <find>localhost</find>
       <find>400</find>
@@ -67,6 +78,8 @@
       <find>elif</find>
       <find>displayboard</find>
       <find>checkhit</find>
+      <find>servmsg</find>
+      <find>get</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -164,7 +177,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.120290816" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -203,24 +215,34 @@
     <entry file="file://$USER_HOME$/Desktop/Montana State University/!CSCI/CSCI 466/Trevor/Networks/Networks PA One/server.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
-          <caret line="62" selection-start-line="62" selection-end-line="62" />
+          <caret line="56" selection-start-line="56" selection-end-line="56" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client.py">
+    <entry file="file://$PROJECT_DIR$/opponent_board.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/own_board.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-675">
-          <caret line="9" column="60" selection-start-line="9" selection-start-column="60" selection-end-line="9" selection-end-column="60" />
+        <state relative-caret-position="68">
+          <caret line="4" column="5" selection-start-line="4" selection-start-column="5" selection-end-line="4" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="311">
+          <caret line="86" column="17" lean-forward="true" selection-start-line="86" selection-start-column="17" selection-end-line="86" selection-end-column="17" />
           <folding>
             <element signature="e#123#136#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/server.py">
+    <entry file="file://$PROJECT_DIR$/client.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-735">
-          <caret line="82" column="14" selection-start-line="82" selection-start-column="10" selection-end-line="82" selection-end-column="14" />
+        <state relative-caret-position="132">
+          <caret line="18" column="16" selection-start-line="18" selection-start-column="16" selection-end-line="18" selection-end-column="16" />
           <folding>
             <element signature="e#123#136#0" expanded="true" />
           </folding>
