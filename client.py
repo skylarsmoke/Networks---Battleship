@@ -11,7 +11,10 @@ def fire(IP, prt, x, y):
     sock.connect((socket.gethostbyname(IP), int(prt)))
     
     user = "Battleship Client"
-    coord = "x=%d&y=%d" %(int(x), int(y))
+    try:
+        coord = "x=%d&y=%d" %(int(x), int(y))
+    except:
+        coord = "x={x}&y={y}" .format(x=x, y=y)
     contType = "application/x-www-form-urlencoded"
     length = len(coord)
     connectionType = "close"
