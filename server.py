@@ -31,9 +31,9 @@ def startServer(port, file):
     #Prints a display for both Own and Opponents board
     print()
     print("          Own Board")
-    displayBoard(own_board)
+    print(displayBoard(own_board))
     print("       Opponent Board")
-    displayBoard(opponent_board)
+    print(displayBoard(opponent_board))
     
     print("Server Started, waiting for client...")
     print()
@@ -57,20 +57,19 @@ def startServer(port, file):
                "Connection: %s\r\n" \
                "Content-Type: %s\r\n" \
                "Content-Length: %s\r\n" \
-               % (servMsg, connectionType, contType, length)
+               % (servMsg, connectionType, contType, length) + "\n" + displayBoard(opponent_board)
         else:
             finalMsg = "HTTP/1.1 200 OK\r\n" \
                "Connection: %s\r\n" \
                "Content-Type: %s\r\n" \
                "Content-Length: %s\r\n" \
                "%s" \
-               % (connectionType, contType, length, servMsg)
+               % (connectionType, contType, length, servMsg) + "\n" + displayBoard(opponent_board)
             
         s.sendall(bytes(str(finalMsg), "utf-8"))
-        print("own board")
-        displayBoard(own_board)
-        print("opponents board")
-        displayBoard(opponent_board)
+        
+        print(displayBoard(own_board))
+        
         s.close()
         
 def transferBoard(board, file):
@@ -92,14 +91,13 @@ def displayBoard(board):
             line += "\n 0 | "
         for y in range(10):
             line += board[x][y] + " "
-    print(line + "|")
-    print("    _____________________")
-    print("     0 1 2 3 4 5 6 7 8 9 ")
-    print()
+    line += "|\n"
+    line += "    _____________________\n"
+    line += "     0 1 2 3 4 5 6 7 8 9 \n"
+    return line
     
 def checkHit(x, y):
     servMsg = ""
-    
     if own_board[y][x] == "_":
         servMsg = "hit=0" #means miss
         own_board[y][x] = "O"
@@ -117,37 +115,12 @@ def checkHit(x, y):
         own_board[y][x] = "X"
         opponent_board[y][x] = "X"
     return servMsg
-
-def htmlBoard(board):
-    html = "<html><body>"
-    html += "    _____________________<br>"
-    n = -1
-    for x in range(9):
-        n += 1
-        if x > 0:
-            html += "|<br>\n %d | " % n
-        else:
-            html += "\n 0 | "
-        for y in range(10):
-            html += board[x][y] + " "
-    html += "|\n<br>"
-    html += "    _____________________<br>\n"
-    html += "     0 1 2 3 4 5 6 7 8 9\n "
-    html += "</body> </html>"
-    return html
     
     
 def checkMsg(msg):
     servMsg = ""
     if re.search("x=-\d+&y=-\d+", msg) or re.search("x=\d+&y=-\d+", msg) or re.search("x=-\d+&y=\d+", msg):
-        servMsg = "404"
-    elif "GET /opponent_board.html" in msg:
-        displayBoard(opponent_board)
-        servMsg = htmlBoard(opponent_board)#htmlBoard(opponent_board)
-    elif "GET /own_board.html" in msg:
-        displayBoard(own_board)
-        servMsg = htmlBoard(own_board)
-        
+        servMsg = "404"        
     elif re.search("x=\d+&y=\d+", msg):
         for i in re.split("\n", msg):
             if re.search(r"x=\d+&y=\d+", i):
@@ -162,14 +135,14 @@ def checkMsg(msg):
                 if x > 9 or y > 9:
                     servMsg = "404" #Not Found
                 else:
-                    servMsg = checkHit(x, y)
+                    servMsg = checkHit(x, y) 
     else:
         servMsg = "400" #Bad Request
     return servMsg
+    
 
-
+               
 def main():
     startServer(sys.argv[1], sys.argv[2])
-
-
+    
 main()

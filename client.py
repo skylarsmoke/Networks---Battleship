@@ -6,6 +6,8 @@ import socket
 import sys
 import re
 
+opponent_board = [["_" for x in range(10)] for y in range(10)]
+
 def fire(IP, prt, x, y):
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     sock.connect((socket.gethostbyname(IP), int(prt)))
@@ -44,6 +46,8 @@ def fire(IP, prt, x, y):
             
             coord = "hit=0"
             
+            opponent_board[int(y)][int(x)] = "O"
+            
             msg = "POST / HTTP/1.1\r\n" \
                "Connection: %s\r\n" \
                "Content-Type: %s\r\n" \
@@ -58,6 +62,8 @@ def fire(IP, prt, x, y):
             
             coord = "hit=1"
             
+            opponent_board[int(y)][int(x)] = "X"
+            
             msg = "POST / HTTP/1.1\r\n" \
                "Connection: %s\r\n" \
                "Content-Type: %s\r\n" \
@@ -71,6 +77,8 @@ def fire(IP, prt, x, y):
             
             coord = "hit=1\&sink=%s" % servMsg
             
+            opponent_board[int(y)][int(x)] = "X"
+            
             msg = "POST / HTTP/1.1\r\n" \
                "Connection: %s\r\n" \
                "Content-Type: %s\r\n" \
@@ -80,8 +88,26 @@ def fire(IP, prt, x, y):
                % (connectionType, contType, user, str(length), coord)
             
             #print("hit=1\&sink=%s" % servMsg)
+        writeBoard(opponent_board)
     
     sock.close()
+    
+def writeBoard(board):
+    file = open("opponent_board.txt", "w+")
+    line = "    _____________________"
+    n = -1
+    for x in range(9):
+        n += 1
+        if x > 0:
+            line += "|\n %d | " % n
+        else:
+            line += "\n 0 | "
+        for y in range(10):
+            line += board[x][y] + " "
+    line += "|\n"
+    line += "    _____________________\n"
+    line += "     0 1 2 3 4 5 6 7 8 9 \n"
+    file.write(line)
     
 def decodeMsg(msg):
     n = 0
